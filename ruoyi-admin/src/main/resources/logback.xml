@@ -7,6 +7,7 @@
 
 	<!-- 控制台输出 -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+
 		<encoder>
 			<pattern>${log.pattern}</pattern>
 		</encoder>
@@ -20,7 +21,7 @@
             <!-- 日志文件名格式 -->
 			<fileNamePattern>${log.path}/sys-info.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<!-- 日志最大的历史 60天 -->
-			<maxHistory>60</maxHistory>
+			<maxHistory>20</maxHistory>
 		</rollingPolicy>
 		<encoder>
 			<pattern>${log.pattern}</pattern>
@@ -64,7 +65,7 @@
             <!-- 按天回滚 daily -->
             <fileNamePattern>${log.path}/sys-user.%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 日志最大的历史 60天 -->
-            <maxHistory>60</maxHistory>
+            <maxHistory>20</maxHistory>
         </rollingPolicy>
         <encoder>
             <pattern>${log.pattern}</pattern>
@@ -72,7 +73,7 @@
     </appender>
 	
 	<!-- 系统模块日志级别控制  -->
-	<logger name="com.ruoyi" level="info" />
+	<logger name="com.ruoyi" level="debug" />
 	<!-- Spring日志级别控制  -->
 	<logger name="org.springframework" level="warn" />
 

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.monitor.mapper.TbDeviceIndexMapper">
+    
+    <resultMap type="TbDeviceIndex" id="TbDeviceIndexResult">
+        <result property="id"    column="id"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="indexName"    column="index_name"    />
+        <result property="netIn"    column="net_in"    />
+        <result property="netOut"    column="net_out"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTbDeviceIndexVo">
+        select id, device_id, index_name, net_in, net_out, status, create_by, create_time, update_by, update_time, remark from tb_device_index
+    </sql>
+
+    <select id="selectTbDeviceIndexList" parameterType="TbDeviceIndex" resultMap="TbDeviceIndexResult">
+        <include refid="selectTbDeviceIndexVo"/>
+        <where>  
+            <if test="deviceId != null "> and device_id = #{deviceId}</if>
+            <if test="indexName != null  and indexName != ''"> and index_name like concat('%', #{indexName}, '%')</if>
+            <if test="netIn != null "> and net_in = #{netIn}</if>
+            <if test="netOut != null "> and net_out = #{netOut}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectTbDeviceIndexById" parameterType="Long" resultMap="TbDeviceIndexResult">
+        <include refid="selectTbDeviceIndexVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTbDeviceIndex" parameterType="TbDeviceIndex" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_device_index
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceId != null">device_id,</if>
+            <if test="indexName != null">index_name,</if>
+            <if test="netIn != null">net_in,</if>
+            <if test="netOut != null">net_out,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceId != null">#{deviceId},</if>
+            <if test="indexName != null">#{indexName},</if>
+            <if test="netIn != null">#{netIn},</if>
+            <if test="netOut != null">#{netOut},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTbDeviceIndex" parameterType="TbDeviceIndex">
+        update tb_device_index
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceId != null">device_id = #{deviceId},</if>
+            <if test="indexName != null">index_name = #{indexName},</if>
+            <if test="netIn != null">net_in = #{netIn},</if>
+            <if test="netOut != null">net_out = #{netOut},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTbDeviceIndexById" parameterType="Long">
+        delete from tb_device_index where id = #{id}
+    </delete>
+
+    <delete id="deleteTbDeviceIndexByIds" parameterType="String">
+        delete from tb_device_index where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

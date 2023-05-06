@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.monitor.mapper.TbDeviceMapper">
+    
+    <resultMap type="TbDevice" id="TbDeviceResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="ip"    column="ip"    />
+        <result property="protocol"    column="protocol"    />
+        <result property="user"    column="user"    />
+        <result property="passwd"    column="passwd"    />
+        <result property="port"    column="port"    />
+        <result property="factory"    column="factory"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTbDeviceVo">
+        select id, name, ip, protocol, user, passwd, port, factory, status, create_by, create_time, update_by, update_time, remark from tb_device
+    </sql>
+
+    <select id="selectTbDeviceList" parameterType="TbDevice" resultMap="TbDeviceResult">
+        <include refid="selectTbDeviceVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="ip != null  and ip != ''"> and ip = #{ip}</if>
+            <if test="protocol != null  and protocol != ''"> and protocol = #{protocol}</if>
+            <if test="user != null  and user != ''"> and user = #{user}</if>
+            <if test="passwd != null  and passwd != ''"> and passwd = #{passwd}</if>
+            <if test="port != null  and port != ''"> and port = #{port}</if>
+            <if test="factory != null  and factory != ''"> and factory = #{factory}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectTbDeviceById" parameterType="Long" resultMap="TbDeviceResult">
+        <include refid="selectTbDeviceVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTbDevice" parameterType="TbDevice" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_device
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="ip != null">ip,</if>
+            <if test="protocol != null">protocol,</if>
+            <if test="user != null">user,</if>
+            <if test="passwd != null">passwd,</if>
+            <if test="port != null">port,</if>
+            <if test="factory != null">factory,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="ip != null">#{ip},</if>
+            <if test="protocol != null">#{protocol},</if>
+            <if test="user != null">#{user},</if>
+            <if test="passwd != null">#{passwd},</if>
+            <if test="port != null">#{port},</if>
+            <if test="factory != null">#{factory},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTbDevice" parameterType="TbDevice">
+        update tb_device
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="ip != null">ip = #{ip},</if>
+            <if test="protocol != null">protocol = #{protocol},</if>
+            <if test="user != null">user = #{user},</if>
+            <if test="passwd != null">passwd = #{passwd},</if>
+            <if test="port != null">port = #{port},</if>
+            <if test="factory != null">factory = #{factory},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTbDeviceById" parameterType="Long">
+        delete from tb_device where id = #{id}
+    </delete>
+
+    <delete id="deleteTbDeviceByIds" parameterType="String">
+        delete from tb_device where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

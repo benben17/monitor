@@ -60,7 +60,7 @@ create table sys_user (
   update_time       datetime                                   comment '更新时间',
   remark            varchar(500)    default null               comment '备注',
   primary key (user_id)
-) engine=innodb auto_increment=100 comment = '用户信息表';
+) engine=innodb default charset='utf8' auto_increment=100 comment = '用户信息表';
 
 -- ----------------------------
 -- 初始化-用户信息表数据
@@ -151,7 +151,7 @@ create table sys_menu (
   update_time       datetime                                   comment '更新时间',
   remark            varchar(500)    default ''                 comment '备注',
   primary key (menu_id)
-) engine=innodb auto_increment=2000 comment = '菜单权限表';
+) engine=innodb DEFAULT CHARSET=utf8 auto_increment=2000 comment = '菜单权限表';
 
 -- ----------------------------
 -- 初始化-菜单信息表数据
@@ -568,7 +568,7 @@ create table sys_logininfor (
   primary key (info_id),
   key idx_sys_logininfor_s  (status),
   key idx_sys_logininfor_lt (login_time)
-) engine=innodb auto_increment=100 comment = '系统访问记录';
+) engine=innodb default charset='utf8'  auto_increment=100 comment = '系统访问记录';
 
 
 -- ----------------------------

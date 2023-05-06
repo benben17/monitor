@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.monitor.mapper.TbDeviceLoadMapper">
+    
+    <resultMap type="TbDeviceLoad" id="TbDeviceLoadResult">
+        <result property="id"    column="id"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="cpu"    column="cpu"    />
+        <result property="memory"    column="memory"    />
+        <result property="sessions"    column="sessions"    />
+        <result property="deviceType"    column="device_type"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTbDeviceLoadVo">
+        select id, device_id, cpu, memory, sessions, device_type, status, create_by, create_time, update_by, update_time, remark from tb_device_load
+    </sql>
+
+    <select id="selectTbDeviceLoadList" parameterType="TbDeviceLoad" resultMap="TbDeviceLoadResult">
+        <include refid="selectTbDeviceLoadVo"/>
+        <where>  
+            <if test="deviceId != null  and deviceId != ''"> and device_id = #{deviceId}</if>
+            <if test="cpu != null  and cpu != ''"> and cpu = #{cpu}</if>
+            <if test="memory != null  and memory != ''"> and memory = #{memory}</if>
+            <if test="sessions != null "> and sessions = #{sessions}</if>
+            <if test="deviceType != null "> and device_type = #{deviceType}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectTbDeviceLoadById" parameterType="Long" resultMap="TbDeviceLoadResult">
+        <include refid="selectTbDeviceLoadVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTbDeviceLoad" parameterType="TbDeviceLoad" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_device_load
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceId != null and deviceId != ''">device_id,</if>
+            <if test="cpu != null and cpu != ''">cpu,</if>
+            <if test="memory != null and memory != ''">memory,</if>
+            <if test="sessions != null">sessions,</if>
+            <if test="deviceType != null">device_type,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceId != null and deviceId != ''">#{deviceId},</if>
+            <if test="cpu != null and cpu != ''">#{cpu},</if>
+            <if test="memory != null and memory != ''">#{memory},</if>
+            <if test="sessions != null">#{sessions},</if>
+            <if test="deviceType != null">#{deviceType},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTbDeviceLoad" parameterType="TbDeviceLoad">
+        update tb_device_load
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceId != null and deviceId != ''">device_id = #{deviceId},</if>
+            <if test="cpu != null and cpu != ''">cpu = #{cpu},</if>
+            <if test="memory != null and memory != ''">memory = #{memory},</if>
+            <if test="sessions != null">sessions = #{sessions},</if>
+            <if test="deviceType != null">device_type = #{deviceType},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTbDeviceLoadById" parameterType="Long">
+        delete from tb_device_load where id = #{id}
+    </delete>
+
+    <delete id="deleteTbDeviceLoadByIds" parameterType="String">
+        delete from tb_device_load where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

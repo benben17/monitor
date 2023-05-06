@@ -697,3 +697,92 @@ create table gen_table_column (
   update_time       datetime                                   comment '更新时间',
   primary key (column_id)
 ) engine=innodb auto_increment=1 comment = '代码生成业务表字段';
+
+
+
+drop table if exists tb_device;
+create table tb_device (
+                           id         bigint(20)      not null auto_increment    comment '编号',
+                           name varchar(64)     default null comment '设备名称',
+                           ip   varchar(20)  default null comment '设备IP',
+                           protocol varchar(20)  default null comment '协议',
+                           user  varchar(64)  default null comment '用户名',
+                           passwd  varchar(64)  default null comment '密码',
+                           port  varchar(64)  default null comment '端口',
+                           factory  varchar(64)  default null comment '厂家',
+                           status            char(1)         default '0'                comment '公告状态（0正常 1异常）',
+                           create_by         varchar(64)     default ''                 comment '创建者',
+                           create_time       datetime                                   comment '创建时间',
+                           update_by         varchar(64)     default ''                 comment '更新者',
+                           update_time       datetime                                   comment '更新时间',
+                           remark            varchar(255)    default null               comment '备注',
+                           primary key (id)
+)engine=innodb  DEFAULT CHARSET='utf8' auto_increment=1 comment = '设备列表';
+
+
+create table tb_device_load(
+                               id bigint NOT NULL auto_increment,
+                               device_id varchar(32) not null default '' comment '主机IP',
+                               cpu varchar(8) not null default '' comment 'cpu负载',
+                               memory varchar(8) not null default '' comment '内存负载',
+                               sessions bigint not null default 0 comment '连接数',
+                               device_type tinyint comment '1:防火墙2F5',
+                               status            char(1)         default '0'                comment '公告状态（0正常 1异常）',
+                               create_by         varchar(64)     default ''                 comment '创建者',
+                               create_time       datetime                                   comment '创建时间',
+                               update_by         varchar(64)     default ''                 comment '更新者',
+                               update_time       datetime                                   comment '更新时间',
+                               remark            varchar(255)    default null               comment '备注',
+                               primary key(id),
+                               key(create_time)
+)engine=innodb  DEFAULT CHARSET='utf8' auto_increment=1 comment = '设备列表';
+
+drop table if exists tb_device_index ;
+create table tb_device_index(
+                                id int(11) NOT NULL auto_increment,
+                                device_id bigint not null default '0' comment '主机IP',
+                                index_name varchar(64)     default ''                 comment '监控指标',
+                                net_in int not null default 0 comment '入流量',
+                                net_out int not null default 0 comment '出流量',
+                                status            char(1)         default '0'                comment '公告状态（0正常 1异常）',
+                                create_by         varchar(64)     default ''                 comment '创建者',
+                                create_time       datetime                                   comment '创建时间',
+                                update_by         varchar(64)     default ''                 comment '更新者',
+                                update_time       datetime                                   comment '更新时间',
+                                remark            varchar(255)    default null               comment '备注',
+                                primary key(id),
+                                key(create_time)
+)engine=innodb  DEFAULT CHARSET='utf8' auto_increment=1 comment = '设备监控指标';
+
+drop  table if exists tb_smtp_conf;
+create table tb_smtp_conf(
+                             id bigint(11) NOT NULL auto_increment,
+                             smtp_name varchar(64) not null default '' comment '名称',
+                             smtp_host varchar(64) not null default '' comment 'smtp主机',
+                             sender varchar(64) not null default '' comment 'sender',
+                             port int not null default '0' comment '端口',
+                             enable_ssl int not null default '0' comment '0关闭1 开启',
+                             smtp_user varchar(64) not null default '' comment '用户名',
+                             smtp_passwd varchar(64) not null default '' comment '密码',
+                             status            char(1)         default '0'                comment '状态（0正常 1异常）',
+                             create_by         varchar(64)     default ''                 comment '创建者',
+                             create_time       datetime                                   comment '创建时间',
+                             update_by         varchar(64)     default ''                 comment '更新者',
+                             update_time       datetime                                   comment '更新时间',
+                             remark            varchar(255)    default null               comment '备注',
+                             primary key(id),
+)engine=innodb  DEFAULT CHARSET='utf8' auto_increment=1 comment = 'smtp 服务配置';
+
+create table tb_alarm_record(
+                                id bigint(11) NOT NULL auto_increment,
+                                device_id bigint(11),
+                                index_name varchar(200)                 comment '监控指标',
+                                alarm_content varchar(200)                 comment '报警内容',
+                                alarm_level       varchar(64)        default ''                comment '报警级别',
+                                create_by         varchar(64)     default ''                 comment '创建者',
+                                create_time       datetime                                   comment '创建时间',
+                                update_by         varchar(64)     default ''                 comment '更新者',
+                                update_time       datetime                                   comment '更新时间',
+                                remark            varchar(255)    default null               comment '备注',
+                                primary key(id),
+)engine=innodb  DEFAULT CHARSET='utf8' auto_increment=1 comment = 'smtp 服务配置';

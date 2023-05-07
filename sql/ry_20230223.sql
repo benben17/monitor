@@ -751,11 +751,11 @@ create table tb_device_group (
 
 drop table if exists tb_device_item ;
 create table tb_device_item(
-    id int(11) NOT NULL auto_increment,
+    id bigint(11) NOT NULL auto_increment,
     device_id bigint not null default '0' comment '主机IP',
-    item_name         varchar(64)     default ''                 comment '监控指标名称',
-    item_value        varchar(32)     default ''                 comment '监控值',
-    clock             int              default 0                 comment '收集时间',
+    item_name         varchar(32)     default ''                 comment '监控指标名称',
+    value             varchar(32)     default ''                 comment '监控值',
+    last_value             varchar(32)     default ''            comment '上次监控值',
     status            char(1)         default '0'                comment '状态（0正常 1异常）',
     create_by         varchar(64)     default ''                 comment '创建者',
     create_time       datetime                                   comment '创建时间',
@@ -765,7 +765,6 @@ create table tb_device_item(
     primary key(id),
     key(device_id,clock)
 )engine=innodb  DEFAULT CHARSET='utf8' auto_increment=1 comment = '设备监控指标';
-
 
 
 

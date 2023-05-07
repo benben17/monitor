@@ -16,8 +16,8 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.monitor.domain.TbDeviceIndex;
-import com.ruoyi.monitor.service.ITbDeviceIndexService;
+import com.ruoyi.monitor.domain.TbDeviceItem;
+import com.ruoyi.monitor.service.ITbDeviceItemService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
@@ -29,20 +29,20 @@ import com.ruoyi.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/monitor/index")
-public class TbDeviceIndexController extends BaseController
+public class TbDeviceItemController extends BaseController
 {
     @Autowired
-    private ITbDeviceIndexService tbDeviceIndexService;
+    private ITbDeviceItemService TbDeviceItemService;
 
     /**
      * 查询设备监控指标列表
      */
     @PreAuthorize("@ss.hasPermi('system:index:list')")
     @GetMapping("/list")
-    public TableDataInfo list(TbDeviceIndex tbDeviceIndex)
+    public TableDataInfo list(TbDeviceItem TbDeviceItem)
     {
         startPage();
-        List<TbDeviceIndex> list = tbDeviceIndexService.selectTbDeviceIndexList(tbDeviceIndex);
+        List<TbDeviceItem> list = TbDeviceItemService.selectTbDeviceItemList(TbDeviceItem);
         return getDataTable(list);
     }
 
@@ -52,10 +52,10 @@ public class TbDeviceIndexController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:index:export')")
     @Log(title = "设备监控指标", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, TbDeviceIndex tbDeviceIndex)
+    public void export(HttpServletResponse response, TbDeviceItem TbDeviceItem)
     {
-        List<TbDeviceIndex> list = tbDeviceIndexService.selectTbDeviceIndexList(tbDeviceIndex);
-        ExcelUtil<TbDeviceIndex> util = new ExcelUtil<TbDeviceIndex>(TbDeviceIndex.class);
+        List<TbDeviceItem> list = TbDeviceItemService.selectTbDeviceItemList(TbDeviceItem);
+        ExcelUtil<TbDeviceItem> util = new ExcelUtil<TbDeviceItem>(TbDeviceItem.class);
         util.exportExcel(response, list, "设备监控指标数据");
     }
 
@@ -66,7 +66,7 @@ public class TbDeviceIndexController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(tbDeviceIndexService.selectTbDeviceIndexById(id));
+        return success(TbDeviceItemService.selectTbDeviceItemById(id));
     }
 
     /**
@@ -75,9 +75,9 @@ public class TbDeviceIndexController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:index:add')")
     @Log(title = "设备监控指标", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody TbDeviceIndex tbDeviceIndex)
+    public AjaxResult add(@RequestBody TbDeviceItem TbDeviceItem)
     {
-        return toAjax(tbDeviceIndexService.insertTbDeviceIndex(tbDeviceIndex));
+        return toAjax(TbDeviceItemService.insertTbDeviceItem(TbDeviceItem));
     }
 
     /**
@@ -86,9 +86,9 @@ public class TbDeviceIndexController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:index:edit')")
     @Log(title = "设备监控指标", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody TbDeviceIndex tbDeviceIndex)
+    public AjaxResult edit(@RequestBody TbDeviceItem TbDeviceItem)
     {
-        return toAjax(tbDeviceIndexService.updateTbDeviceIndex(tbDeviceIndex));
+        return toAjax(TbDeviceItemService.updateTbDeviceItem(TbDeviceItem));
     }
 
     /**
@@ -99,6 +99,6 @@ public class TbDeviceIndexController extends BaseController
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
-        return toAjax(tbDeviceIndexService.deleteTbDeviceIndexByIds(ids));
+        return toAjax(TbDeviceItemService.deleteTbDeviceItemByIds(ids));
     }
 }
